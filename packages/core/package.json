@@ -1,0 +1,29 @@
+{
+  "name": "@yacoin/core",
+  "version": "0.1.0",
+  "description": "Core blockchain logic for YaCoin (blocks, chain, PoW)",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "scripts": {
+    "clean": "rm -rf dist",
+    "typecheck": "tsc --noEmit",
+    "build:esm": "tsx esbuild.config.ts",
+    "build": "npm run clean && npm run typecheck && npm run build:esm",
+    "dev": "tsx watch esbuild.config.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "blockchain",
+    "core"
+  ],
+  "author": "yardobr",
+  "license": "ISC",
+  "dependencies": {},
+  "devDependencies": {
+    "typescript": "^5.5.3",
+    "esbuild": "^0.23.0",
+    "esbuild-node-externals": "^1.13.1",
+    "tsx": "^4.16.2"
+  }
+} 

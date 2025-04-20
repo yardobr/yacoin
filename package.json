@@ -1,0 +1,28 @@
+{
+  "name": "yacoin",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Minimal cryptocurrency implementation in TypeScript",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "echo \"Build script TBD (using esbuild)\"",
+    "test": "echo \"Test script TBD\"",
+    "lint": "echo \"Lint script TBD\"",
+    "clean": "echo \"Clean script TBD\""
+  },
+  "keywords": [
+    "cryptocurrency",
+    "blockchain",
+    "typescript",
+    "node"
+  ],
+  "author": "yardobr",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.14.11",
+    "esbuild": "^0.23.0",
+    "typescript": "^5.5.3"
+  }
+} 
