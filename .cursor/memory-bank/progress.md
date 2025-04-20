@@ -1,5 +1,20 @@
-- Current status: Planning phase complete, ready to begin implementation
-- Completed: High-level architecture design
-- In progress: Core blockchain module design
-- Pending: All implementation work
+- Current status: Core Blockchain Module implementation in progress.
+- Completed: 
+  - High-level architecture design
+  - NPM workspace setup
+  - @yacoin/core package setup (incl. build system with esbuild/tsx)
+  - Refactored type definitions (`src/types/block.ts`, `src/types/transactions.ts`)
+  - Implemented block hashing (`src/blockchain/blockUtils.ts`)
+  - Implemented genesis block creation (`src/blockchain/genesis.ts`)
+  - Implemented basic Proof-of-Work mining (`src/blockchain/mining.ts`)
+  - Organized core logic into `src/blockchain` directory
+- In progress: Core Blockchain Module - Chain representation and validation.
+- Pending: 
+  - Full chain validation logic
+  - Difficulty adjustment mechanism
+  - Transaction System module
+  - Wallet Module
+  - P2P Network Layer
+  - CLI/API Interface
+  - Storage mechanism (beyond in-memory)
 - Known issues: None yet 

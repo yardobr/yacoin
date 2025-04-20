@@ -3,5 +3,6 @@
 - Key libraries: Node's crypto module for cryptography
 - Storage: LevelDB or similar for blockchain data
 - Network: WebSockets for P2P communication
-- Building: ESBuild
+- Building: ESBuild (using `esbuild.config.ts` and executed via `tsx`)
+- Build helpers: `esbuild-node-externals`
 - Development approach: Test-driven development with incremental implementation 
