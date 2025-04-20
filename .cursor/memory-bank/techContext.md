@@ -1,0 +1,7 @@
+- Primary language: TypeScript
+- Runtime: Node.js
+- Key libraries: Node's crypto module for cryptography
+- Storage: LevelDB or similar for blockchain data
+- Network: WebSockets for P2P communication
+- Building: ESBuild
+- Development approach: Test-driven development with incremental implementation 

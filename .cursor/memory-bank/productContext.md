@@ -1,0 +1,4 @@
+- Purpose: Educational cryptocurrency implementation to understand Bitcoin's core concepts
+- Target users: Developers learning about blockchain technology
+- Problem statement: Need for a simplified but complete cryptocurrency implementation that demonstrates core blockchain principles
+- User experience: Command-line interface for node operations, mining, and transactions 

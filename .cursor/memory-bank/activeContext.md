@@ -1,0 +1,4 @@
+- Current focus: Planning phase, defining architecture and component interfaces
+- Recent decisions: Chose UTXO model over account model, functional programming style
+- Open questions: Specific P2P protocol details, storage implementation
+- Next steps: Begin implementation of Core Blockchain Module 

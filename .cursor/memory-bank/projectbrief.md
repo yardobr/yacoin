@@ -1,0 +1,5 @@
+- Project name: YaCoin
+- Goal: Create a minimal but complete cryptocurrency implementation in TypeScript
+- Core requirements: Fully decentralized, autonomous, with basic security features that prevent double-spending
+- Coding style: Functional programming with TypeScript - no classes or interfaces, only plain objects, types, and arrow functions
+- Timeline: Focused on minimal implementation that takes the least possible time while being fully functional 
