@@ -1,0 +1,69 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# YaCoin Project Rules and Guidelines
+
+## Code Style and Structure
+
+1. **Functional Programming Only**
+   - Use functions and plain objects, no classes
+   - Use TypeScript `type` declarations, not `interfaces`
+   - Prefer immutable data structures and pure functions
+
+2. **Module Structure**
+   - Keep files small and focused on a single responsibility
+   - Use barrel exports (index.ts) for cleaner imports
+   - Group related functionality in directories
+
+3. **Imports and Exports**
+   - Use named exports/imports rather than default exports
+   - When importing from other packages, reference the package, not relative paths
+   - Use CommonJS module system throughout the project
+   - No need to include file extensions in imports
+
+## Package Organization
+
+1. **Core Principles**
+   - `@yacoin/core`: Blockchain fundamentals, validation, mining, transactions
+   - `@yacoin/wallet`: Cryptographic operations, key management, signatures
+   - `@yacoin/examples`: Integration tests and usage examples
+
+2. **Dependencies**
+   - Keep direct dependencies minimal
+   - Favor Node.js built-ins where possible
+   - Use "hoisted" dependencies from root when appropriate
+
+## Development Workflow
+
+1. **Building**
+   - Use project-wide scripts from root package.json (`npm run build:all`, `npm run dev`)
+   - Use esbuild for fast builds
+
+2. **Testing**
+   - Write focused unit tests for core cryptographic functions
+   - Use integration tests for end-to-end flows
+   - Test both happy paths and edge cases
+
+## Cryptography Guidelines
+
+1. **Key Security**
+   - Never log or expose private keys
+   - Provide clear warnings about development vs production keys
+
+2. **Signature Verification**
+   - Always verify that public keys match claimed addresses
+   - Validate all signatures in transactions
+
+## Documentation
+
+1. **Code Comments**
+   - Focus on "why" not "what" in comments
+   - Use JSDoc for public API functions
+   - Document edge cases and security considerations
+
+2. **Memory Bank Structure**
+   - Keep progress.md updated with what works and what's left
+   - Document design decisions in activeContext.md
+   - Update tech choices in techContext.md

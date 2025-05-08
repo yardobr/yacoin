@@ -1,5 +1,8 @@
 import { Transaction, TransactionInput, TransactionOutput, UnspentOutput } from './transactionUtils';
 
+// This import will need to be added later when the wallet package is built
+// import { verifyTransactionInputSignature } from '@yacoin/wallet';
+
 // UTXOSet: Array of all currently unspent outputs
 export type UTXOSet = UnspentOutput[];
 
@@ -91,9 +94,19 @@ export const validateTransactionStructure = (transaction: Transaction): boolean 
   return true;
 };
 
-// Placeholder for signature verification
+// Temporary signature verification - will be replaced with real wallet verification
 const verifySignature = (input: TransactionInput, utxo: UnspentOutput, transaction: Transaction): boolean => {
-  // TODO: Replace with real cryptographic signature verification
+  // TODO: Replace with real cryptographic signature verification from @yacoin/wallet
+  // Once the wallet package is built, uncomment the import and use:
+  // return verifyTransactionInputSignature(
+  //   transaction.id,
+  //   input.transactionOutputId,
+  //   input.outputIndex,
+  //   utxo.amount,
+  //   input.signature,
+  //   utxo.address  // In the real implementation, we'd need to store public keys with UTXOs
+  // );
+  
   // For now, just check the signature is a non-empty string
   return typeof input.signature === 'string' && input.signature.length > 0;
 };

@@ -1,8 +1,14 @@
 - Primary language: TypeScript
 - Runtime: Node.js
-- Key libraries: Node's crypto module for cryptography
-- Storage: LevelDB or similar for blockchain data
-- Network: WebSockets for P2P communication
-- Building: ESBuild (using `esbuild.config.ts` and executed via `tsx`)
-- Build helpers: `esbuild-node-externals`
-- Development approach: Test-driven development with incremental implementation 
+- Project structure: NPM workspaces with multiple packages
+- Module system: CommonJS for all packages
+- Key libraries:
+  - Node's crypto module for basic cryptography
+  - elliptic for secp256k1 curve operations (wallet)
+- Building: ESBuild for all packages
+  - Configured with esbuild-node-externals for proper dependency handling
+  - Shared dependencies hoisted to root
+- Development approach: 
+  - Functional programming (no classes)
+  - Type-based architecture (no interfaces)
+  - Monorepo for better code organization 

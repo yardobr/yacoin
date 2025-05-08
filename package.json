@@ -7,10 +7,19 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "echo \"Build script TBD (using esbuild)\"",
-    "test": "echo \"Test script TBD\"",
-    "lint": "echo \"Lint script TBD\"",
-    "clean": "echo \"Clean script TBD\""
+    "build": "npm run build:all",
+    "build:all": "npm run build:core && npm run build:wallet",
+    "build:core": "cd packages/core && npm run build",
+    "build:wallet": "cd packages/wallet && npm run build",
+    "test": "npm run test:all",
+    "test:all": "npm run test:core && npm run test:wallet && npm run test:examples",
+    "test:core": "cd packages/core && npm run test",
+    "test:wallet": "cd packages/wallet && npm run test",
+    "test:examples": "cd packages/examples && npm run test:wallet",
+    "dev": "npm run build:all && npm run dev:examples",
+    "dev:examples": "cd packages/examples && npm run test:wallet",
+    "clean": "rm -rf packages/*/dist packages/*/node_modules node_modules",
+    "clean:dist": "rm -rf packages/*/dist"
   },
   "keywords": [
     "cryptocurrency",
@@ -23,6 +32,7 @@
   "devDependencies": {
     "@types/node": "^20.14.11",
     "esbuild": "^0.23.0",
+    "esbuild-node-externals": "^1.12.0",
     "typescript": "^5.5.3"
   }
 } 

@@ -1,0 +1,17 @@
+{
+  "name": "@yacoin/examples",
+  "version": "0.1.0",
+  "description": "Examples for YaCoin cryptocurrency",
+  "scripts": {
+    "test:wallet": "tsx wallet-integration.ts"
+  },
+  "dependencies": {
+    "@yacoin/core": "0.1.0",
+    "@yacoin/wallet": "0.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.3.3",
+    "tsx": "^4.6.2"
+  }
+} 
