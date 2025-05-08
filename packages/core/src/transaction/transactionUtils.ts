@@ -11,14 +11,18 @@ export type TransactionInput = {
 export type TransactionOutput = {
   address: string; // Address of the recipient
   amount: number; // Amount of coins
+  publicKey: string; // Public key corresponding to the address
 };
 
-export type Transaction = {
+export type TransactionData = {
   id: string;
   inputs: TransactionInput[];
   outputs: TransactionOutput[];
   timestamp: number;
 };
+
+// Rename the type alias to avoid conflicts with the imported type
+type Transaction = TransactionData;
 
 // Represents an Unspent Transaction Output available to be used as input
 export type UnspentOutput = {
@@ -26,6 +30,7 @@ export type UnspentOutput = {
   outputIndex: number; // Index of this output in that transaction
   address: string; // Address that owns this output
   amount: number; // Amount of coins in this output
+  publicKey: string; // Public key corresponding to the address (for signature verification)
 };
 
 // Type for transaction data before ID calculation and signing
@@ -44,7 +49,7 @@ const calculateTransactionId = (transactionData: UnsignedTransactionData): strin
 };
 
 // Placeholder for signing - replace with actual crypto logic later
-const signInput = (transaction: Transaction, inputIndex: number, privateKey: string, utxo: UnspentOutput): string => {
+const signInput = (transaction: TransactionData, inputIndex: number, privateKey: string, utxo: UnspentOutput): string => {
   // In reality, you'd sign a hash of the relevant transaction data
   console.log(`Signing input ${inputIndex} for tx ${transaction.id} with key ${privateKey} for UTXO ${utxo.transactionOutputId}:${utxo.outputIndex}`);
   return `signed_placeholder_${inputIndex}`;
@@ -55,8 +60,10 @@ export const createTransaction = (
   amount: number,
   senderUtxos: UnspentOutput[],
   senderPrivateKey: string, // Placeholder - Replace with actual key type
-  senderAddress: string
-): Transaction | null => {
+  senderAddress: string,
+  senderPublicKey: string,
+  recipientPublicKey: string
+): TransactionData | null => {
 
   const totalInputAmount = senderUtxos.reduce((sum, utxo) => sum + utxo.amount, 0);
 
@@ -67,12 +74,20 @@ export const createTransaction = (
 
   const outputs: TransactionOutput[] = [];
   // Output for the recipient
-  outputs.push({ address: recipientAddress, amount });
+  outputs.push({ 
+    address: recipientAddress, 
+    amount,
+    publicKey: recipientPublicKey 
+  });
 
   // Output for change (if any)
   const changeAmount = totalInputAmount - amount;
   if (changeAmount > 0) {
-    outputs.push({ address: senderAddress, amount: changeAmount });
+    outputs.push({ 
+      address: senderAddress, 
+      amount: changeAmount,
+      publicKey: senderPublicKey 
+    });
   }
 
   const timestamp = Date.now();
@@ -93,7 +108,7 @@ export const createTransaction = (
 
   // Now create the final inputs with signatures
   const inputs: TransactionInput[] = [];
-  const finalTransactionForSigning: Transaction = { // Need full tx structure for signing context
+  const finalTransactionForSigning: TransactionData = { // Need full tx structure for signing context
     id: txId,
     inputs: [], // Will be populated below
     outputs,

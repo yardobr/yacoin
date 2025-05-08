@@ -4,63 +4,68 @@ This file tracks the immediate focus, recent changes, and next steps for the YaC
 
 ## Current Focus
 
-The current focus is on improving project structure, build processes, and continuing development of the transaction system with real cryptographic signing integration.
+The current focus is on implementing the remaining core cryptocurrency functionality, specifically focusing on mining rewards, network layer, and enhancing transaction validation.
 
 ## Recent Changes (Last Session)
 
-- Created the separate `@yacoin/wallet` package for wallet functionality:
-  - Implemented key pair generation using elliptic curve cryptography (secp256k1) in `keyPair.ts`
-  - Created wallet address derivation using SHA-256 + RIPEMD-160 hashing in `wallet.ts`
-  - Implemented transaction signing and signature verification in `signatureVerification.ts`
+- Improved the UTXO model to store public keys:
+  - Added `publicKey` field to `UnspentOutput` and `TransactionOutput` types in `packages/core/src/transaction/transactionUtils.ts`
+  - Updated transaction creation functions to include public keys for proper verification
+  - Modified examples to work with the updated UTXO model
 
-- Enhanced the blockchain management in `packages/core/src/blockchain/chain.ts`:
-  - Added `addBlock` function to add validated blocks to the chain
-  - Added helper functions for retrieving the blockchain and latest block
-  - Created a placeholder for `replaceChain` function for the P2P layer
+- Integrated wallet signature verification into the core transaction validation:
+  - Implemented a dependency inversion architecture to avoid direct dependency of core on wallet
+  - Created `verification.ts` with a `SignatureVerifier` interface in the core package
+  - Updated the validation.ts to use the signature verifier interface
+  - Made the wallet package register its verifier implementation with the core
 
-- Created an `@yacoin/examples` package with:
-  - Integration tests for the wallet functionality
-  - Demo of transaction creation and signature verification
+- Implemented a transaction pool (mempool) for unconfirmed transactions:
+  - Created `transactionPool.ts` with functions to manage unconfirmed transactions
+  - Implemented double-spend prevention within the pool using efficient Set data structure
+  - Added functions to add, remove, and validate transactions
+  - Created functionality to update the pool when blocks are added to the chain
+  - Added a demo example for the transaction pool
 
-- Improved project structure:
-  - Fixed dependency management to use shared dependencies from the root package
-  - Added project-wide scripts in root package.json for streamlined workflow
-  - Resolved type conflicts between different dependency versions
-  - Standardized on CommonJS modules for all packages (converted wallet from ES modules)
+- Fixed architectural issues:
+  - Inverted dependencies so the core package doesn't depend on the wallet
+  - Optimized `hasDoubleSpendInPool` from O(n²m) to O(n+m) complexity using Sets
+  - Renamed `Transaction` to `TransactionData` to resolve type conflicts
+  - Updated package exports and imports for better organization
 
 ## Next Steps
 
-1. **Transaction Integration:**
-   - Complete the integration of wallet signature verification into core transaction validation
-   - Add public key management to the UTXO tracking system
-
-2. **Transaction Pool:**
-   - Create a mempool/transaction pool for holding unconfirmed transactions
-   - Implement functions to add, remove, and validate transactions in the pool
-
-3. **Mining Reward Mechanism:**
+1. **Mining Reward Mechanism:**
    - Add coinbase transaction creation for mining rewards
+   - Implement mining rewards calculation (fixed amount or decreasing over time)
    - Integrate mining rewards with block creation
 
-4. **Difficulty Adjustment:**
+2. **Difficulty Adjustment:**
    - Implement logic to adjust the mining `difficulty` based on block generation time
+   - Add time-based rules to ensure steady block production
 
-5. **Code Quality Improvements:**
-   - Create a shared types package
-   - Add unit tests for critical functions
-   - Improve error handling in cryptographic operations
+3. **Network Layer:**
+   - Design and implement the P2P network protocol
+   - Add node discovery and blockchain synchronization
+   - Create transaction broadcasting functionality
+
+4. **Storage Implementation:**
+   - Design a persistent storage solution for the blockchain
+   - Create serialization/deserialization methods for blocks and transactions
+   - Implement database operations for saving and loading the chain
+
+5. **CLI/API Interface:**
+   - Create command-line tools for node operations
+   - Add wallet management commands
+   - Implement transaction creation/mining commands
 
 ## Active Decisions/Considerations
 
-- Using `esbuild` for fast builds across all packages with a shared configuration
-- Using CommonJS modules for all packages for consistency and simpler imports
-- Implementing wallet as a separate package for better separation of concerns
-- Using a workspace setup with hoisted dependencies to avoid version conflicts
-- Key cryptographic decisions:
-  - Using secp256k1 elliptic curve (same as Bitcoin)
-  - Deriving addresses from public keys using SHA-256 + RIPEMD-160 hashing
-  - Signing transaction inputs individually with context of the entire transaction
-- All types are defined using `type` (not `interface`), and code is functional
+- Using dependency inversion for crypto functionality to maintain proper package dependencies
+- Optimizing data structures for performance (Sets for transaction pool validation)
+- Maintaining proper package separation: core should not depend on higher-level packages
+- Using registration pattern for connecting wallet functionality to core
+- Following functional programming principles for all code
+- All types defined using `type` (not `interface`)
 
 # Open questions: Specific P2P protocol details, storage implementation details, transaction pool design, and full cryptographic integration.
 # Next steps: 

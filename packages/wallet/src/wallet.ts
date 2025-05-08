@@ -1,7 +1,7 @@
 import crypto from 'crypto';
 import { KeyPair, generateKeyPair, sign } from './keyPair';
 import { 
-  Transaction, 
+  TransactionData, 
   TransactionInput, 
   TransactionOutput,
   UnspentOutput
@@ -46,9 +46,10 @@ export const createWallet = (): Wallet => {
 export const createTransaction = (
   wallet: Wallet,
   recipientAddress: string,
+  recipientPublicKey: string,
   amount: number,
   availableUtxos: UnspentOutput[]
-): Transaction | null => {
+): TransactionData | null => {
   
   // Find sufficient UTXOs that belong to this wallet
   const senderUtxos = availableUtxos.filter(utxo => utxo.address === wallet.address);
@@ -63,12 +64,20 @@ export const createTransaction = (
   const outputs: TransactionOutput[] = [];
   
   // Output for the recipient
-  outputs.push({ address: recipientAddress, amount });
+  outputs.push({ 
+    address: recipientAddress, 
+    amount,
+    publicKey: recipientPublicKey
+  });
   
   // Output for change (if any)
   const changeAmount = totalInputAmount - amount;
   if (changeAmount > 0) {
-    outputs.push({ address: wallet.address, amount: changeAmount });
+    outputs.push({ 
+      address: wallet.address, 
+      amount: changeAmount,
+      publicKey: wallet.keyPair.publicKey
+    });
   }
   
   const timestamp = Date.now();

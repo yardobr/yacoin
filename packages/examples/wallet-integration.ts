@@ -7,9 +7,12 @@
  * 3. Verifying transaction signatures
  */
 
+// Import wallet first to ensure its signature verifier is registered
 import { createWallet, sign, verify, createTransaction } from '../wallet/src/index';
-import { UnspentOutput } from '../core/src/transaction/transactionUtils';
 import { verifyTransactionInputSignature } from '../wallet/src/signatureVerification';
+
+// Then import from core
+import { UnspentOutput, TransactionData } from '../core/src/transaction/transactionUtils';
 
 // Create wallets
 console.log('Creating wallets...');
@@ -25,13 +28,15 @@ const aliceUtxos: UnspentOutput[] = [
     transactionOutputId: 'genesis-transaction',
     outputIndex: 0,
     address: alice.address,
-    amount: 50
+    amount: 50,
+    publicKey: alice.keyPair.publicKey
   },
   {
     transactionOutputId: 'mining-reward-1',
     outputIndex: 0,
     address: alice.address,
-    amount: 50
+    amount: 50,
+    publicKey: alice.keyPair.publicKey
   }
 ];
 
@@ -41,6 +46,7 @@ console.log('\nCreating transaction from Alice to Bob...');
 const transaction = createTransaction(
   alice,           // Sender's wallet
   bob.address,     // Recipient's address
+  bob.keyPair.publicKey, // Recipient's public key
   75,              // Amount to send
   aliceUtxos       // Available UTXOs
 );

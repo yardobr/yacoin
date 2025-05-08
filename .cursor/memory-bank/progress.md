@@ -23,15 +23,18 @@ Tracks what's working, what's left, current status, and known issues.
     - Block & chain validation functions implemented
     - Transaction system:
         - Transaction types defined using TypeScript types
-        - Transaction creation with change output and placeholder signing
+        - Transaction creation with change output and real signatures
         - Transaction validation for both structure and semantics
+        - UTXO model enhanced with public key storage
+        - Transaction pool implementation for unconfirmed transactions
+        - Signature verification interface for dependency inversion
 
 - **`@yacoin/wallet` Package:**
     - Key pair generation using secp256k1 elliptic curve cryptography
     - Wallet address creation using SHA-256 + RIPEMD-160 hashing
     - Digital signatures for transactions
     - Signature verification utilities
-    - Architecture ready for integration with core package
+    - Signature verifier registration with core package
 
 - **`@yacoin/examples` Package:**
     - Wallet integration test demonstrating:
@@ -39,18 +42,17 @@ Tracks what's working, what's left, current status, and known issues.
       - Transaction creation with real cryptographic signatures
       - Signature verification
       - Testing invalid signatures
+    - Transaction pool demo showing:
+      - Adding valid transactions
+      - Rejecting duplicate transactions
+      - Preventing double spending
+      - Removing transactions when included in blocks
 
 ## What's Left to Build
 
-- **Integration and Enhancements:**
-  - Complete integration of wallet signature verification into core transaction validation
-  - Add public key management to UTXO tracking
-  - Create a shared types package
-
 - **Core Functionality:**
+  - Mining reward mechanism (coinbase transactions)
   - Mining difficulty adjustment
-  - Transaction pool/mempool implementation
-  - Mining reward mechanism
   - Network layer (P2P communication)
   - Persistent storage for the blockchain
   - API/CLI for interaction
@@ -64,17 +66,15 @@ Tracks what's working, what's left, current status, and known issues.
 ## Current Status
 
 - The core blockchain data structures and validation logic are implemented
-- Transaction creation and basic validation are working
-- A separate wallet package has been created with real cryptographic functionality
-- Basic blockchain management is in place, including the ability to add new validated blocks
-- Fully functional integration testing demonstrates wallet functionality working correctly
-- Project structure is well-organized with efficient build processes
+- Transaction creation and validation are working with real cryptographic signatures
+- UTXO tracking includes public keys for proper signature verification
+- A transaction pool manages unconfirmed transactions with double-spend prevention
+- Architecture has been improved with proper dependency direction (core doesn't depend on wallet)
+- Performance optimizations in place for transaction pool operations
 
 ## Known Issues/TODOs
 
-- The transaction validation in the core package still uses placeholder signature verification. This needs to be integrated with the real signature verification from the wallet package
-- UTXOs need to store public keys for proper signature verification
+- No coinbase transaction implementation yet for mining rewards
 - Mining difficulty is currently static
-- No transaction pool implementation yet
-- No network layer
-- No persistence 
+- No network layer implementation
+- No persistence layer 
