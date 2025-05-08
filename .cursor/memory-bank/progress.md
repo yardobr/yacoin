@@ -15,12 +15,17 @@ Tracks what's working, what's left, current status, and known issues.
         - Basic Proof-of-Work mining (`mineBlock`, `hashMatchesDifficulty` in `src/blockchain/mining.ts`).
     - **Chain Representation:** Blockchain array initialized with genesis block (`blockchain` in `src/blockchain/chain.ts`).
     - **Block & Chain Validation:** Core validation functions implemented (`isValidBlockStructure`, `isValidNewBlock`, `isValidChain` in `src/blockchain/validation.ts`).
+    - **Transaction System:**
+        - Transaction types (`TransactionInput`, `TransactionOutput`, `Transaction`, `UnspentOutput`) defined using TypeScript types.
+        - Transaction creation (`createTransaction`) implemented, including change output and placeholder signing.
+        - Transaction validation:
+            - Structural validation (`validateTransactionStructure`) checks all fields and nested structures.
+            - Semantic validation (`validateTransactionSemantics`) checks UTXO existence, double-spending, signature placeholder, and input/output sum.
 
 ## What's Left to Build (High Level - see activeContext.md for details)
 
-- Transaction creation and validation.
+- Wallet/key management (generation, signing, verification, real cryptography).
 - Adding new blocks to the chain (including mining integration).
-- Wallet/key management (generation, signing, verification).
 - Mining difficulty adjustment.
 - Transaction pool implementation.
 - Network layer (P2P communication).
@@ -30,14 +35,14 @@ Tracks what's working, what's left, current status, and known issues.
 ## Current Status
 
 - Core data structures for blocks and transactions are defined.
-- Basic block creation (genesis) and mining functions exist.
+- Transaction creation and validation logic is implemented and tested at the type/logic level.
 - The blockchain is represented as an in-memory array.
-- Essential validation logic for individual blocks and the overall chain integrity is implemented.
-- The next major steps involve implementing transaction handling and the process of adding new, validated blocks to the chain.
+- Essential validation logic for individual blocks, the overall chain, and transactions is implemented.
+- The next major steps involve implementing wallet/key management and the process of adding new, validated blocks to the chain.
 
 ## Known Issues/TODOs
 
-- Transaction validation logic is minimal (needs signature checks, etc.).
+- Transaction signature logic is a placeholder (needs real cryptographic signing/verification).
 - Mining difficulty is currently static.
 - Proof-of-Work validation in `validation.ts` uses the block's own difficulty; needs integration with dynamic difficulty adjustment logic later.
 - No wallet implementation yet.
