@@ -7,6 +7,7 @@ Tracks what's working, what's left, current status, and known issues.
 - **Workspace Setup:** 
   - NPM workspace initialized with shared dependencies
   - Project-wide build scripts added to streamline development
+  - Testing infrastructure set up with Jest and TypeScript
 
 - **`@yacoin/core` Package:**
     - Basic structure created (`src/`, `package.json`, `tsconfig.json`)
@@ -28,6 +29,11 @@ Tracks what's working, what's left, current status, and known issues.
         - UTXO model enhanced with public key storage
         - Transaction pool implementation for unconfirmed transactions
         - Signature verification interface for dependency inversion
+    - Tests implemented:
+        - TypeScript-based Jest configuration
+        - Unit tests for core types (Block, Transaction)
+        - Unit tests for blockchain utilities (hash calculation)
+        - Unit tests for genesis block creation
 
 - **`@yacoin/wallet` Package:**
     - Key pair generation using secp256k1 elliptic curve cryptography
@@ -58,7 +64,8 @@ Tracks what's working, what's left, current status, and known issues.
   - API/CLI for interaction
 
 - **Quality Improvements:**
-  - Unit tests for all critical functions
+  - Complete test coverage for all core functions
+  - Tests for wallet and examples packages
   - Better error handling and logging
   - Security audits
   - Documentation
@@ -71,6 +78,7 @@ Tracks what's working, what's left, current status, and known issues.
 - A transaction pool manages unconfirmed transactions with double-spend prevention
 - Architecture has been improved with proper dependency direction (core doesn't depend on wallet)
 - Performance optimizations in place for transaction pool operations
+- Unit testing established for core package with TypeScript-based Jest configuration
 
 ## Known Issues/TODOs
 

@@ -1,14 +1,18 @@
 - Primary language: TypeScript
 - Runtime: Node.js
 - Project structure: NPM workspaces with multiple packages
-- Module system: CommonJS for all packages
+- Module system: ES Modules for all packages
 - Key libraries:
   - Node's crypto module for basic cryptography
   - elliptic for secp256k1 curve operations (wallet)
 - Building: ESBuild for all packages
   - Configured with esbuild-node-externals for proper dependency handling
   - Shared dependencies hoisted to root
+- Testing: Jest with TypeScript support
+  - TypeScript configuration files (jest.config.ts)
+  - ts-node for Jest TS config execution
+  - Unit tests for core types and utilities
 - Development approach: 
   - Functional programming (no classes)
   - Type-based architecture (no interfaces)
-  - Monorepo for better code organization 
+  - Monorepo for better code organization
