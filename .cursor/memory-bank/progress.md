@@ -29,6 +29,7 @@ Tracks what's working, what's left, current status, and known issues.
         - UTXO model enhanced with public key storage
         - Transaction pool implementation for unconfirmed transactions
         - Signature verification interface for dependency inversion
+        - Coinbase transaction structure and functions defined
     - Tests implemented:
         - TypeScript-based Jest configuration
         - Unit tests for core types (Block, Transaction)
@@ -53,11 +54,15 @@ Tracks what's working, what's left, current status, and known issues.
       - Rejecting duplicate transactions
       - Preventing double spending
       - Removing transactions when included in blocks
+    - Mining reward examples:
+      - Coinbase transaction creation with block rewards
+      - Bitcoin-like halving reward model implementation
+      - Tracking coinbase maturity period (example level)
 
 ## What's Left to Build
 
 - **Core Functionality:**
-  - Mining reward mechanism (coinbase transactions)
+  - Integration of mining rewards into core blockchain mining process
   - Mining difficulty adjustment
   - Network layer (P2P communication)
   - Persistent storage for the blockchain
@@ -78,11 +83,13 @@ Tracks what's working, what's left, current status, and known issues.
 - A transaction pool manages unconfirmed transactions with double-spend prevention
 - Architecture has been improved with proper dependency direction (core doesn't depend on wallet)
 - Performance optimizations in place for transaction pool operations
+- Coinbase transaction structure and creation are defined, but not integrated with mining process
+- Mining reward calculation with Bitcoin-like halving implemented in examples
 - Unit testing established for core package with TypeScript-based Jest configuration
 
 ## Known Issues/TODOs
 
-- No coinbase transaction implementation yet for mining rewards
+- Coinbase transactions are not automatically included in mined blocks at core level
 - Mining difficulty is currently static
 - No network layer implementation
 - No persistence layer 

@@ -35,9 +35,11 @@ The current focus is on implementing the remaining core cryptocurrency functiona
 ## Next Steps
 
 1. **Mining Reward Mechanism:**
-   - Add coinbase transaction creation for mining rewards
-   - Implement mining rewards calculation (fixed amount or decreasing over time)
-   - Integrate mining rewards with block creation
+   - ✅ Created coinbase transaction structure in `packages/core/src/types/coinbase.ts`
+   - ✅ Implemented coinbase transaction creation and validation in `packages/core/src/transaction/coinbase.ts`
+   - ✅ Implemented mining rewards calculation with Bitcoin-like halving approach in example files
+   - 🔄 Integrate mining rewards with core block creation process
+   - 🔄 Update mining functions to automatically include coinbase transactions
 
 2. **Difficulty Adjustment:**
    - Implement logic to adjust the mining `difficulty` based on block generation time
@@ -69,5 +71,5 @@ The current focus is on implementing the remaining core cryptocurrency functiona
 
 # Open questions: Specific P2P protocol details, storage implementation details, transaction pool design, and full cryptographic integration.
 # Next steps: 
-  1. Implement chain representation (e.g., in-memory `Block[]` array in `src/blockchain/chain.ts`).
-  2. Implement basic chain/block validation logic (`src/blockchain/validation.ts`). 
+  1. Integrate mining rewards directly into the core mining process.
+  2. Update block mining to automatically include coinbase transactions. 
