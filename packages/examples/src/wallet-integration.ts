@@ -8,11 +8,11 @@
  */
 
 // Import wallet first to ensure its signature verifier is registered
-import { createWallet, sign, verify, createTransaction } from '../wallet/src/index';
-import { verifyTransactionInputSignature } from '../wallet/src/signatureVerification';
+import { createWallet, sign, verify, createTransaction } from '../../wallet/src/index';
+import { verifyTransactionInputSignature } from '../../wallet/src/signatureVerification';
 
 // Then import from core
-import { UnspentOutput, TransactionData } from '../core/src/transaction/transactionUtils';
+import { UnspentOutput } from '../../core/src/transaction/transactionUtils';
 
 // Create wallets
 console.log('Creating wallets...');

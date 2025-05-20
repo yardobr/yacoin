@@ -67,3 +67,49 @@ alwaysApply: false
    - Keep progress.md updated with what works and what's left
    - Document design decisions in activeContext.md
    - Update tech choices in techContext.md
+
+## Project Organizational Patterns
+
+### Package Structure
+- Each package has its own `package.json`, `tsconfig.json`, and `src/` directory
+- Core logic is in `@yacoin/core`
+- Wallet functionality is in `@yacoin/wallet` 
+- Examples demonstrating usage are in `@yacoin/examples`
+
+### Examples Package Organization
+- All demo files are located in the `src/` directory
+- The package has an `index.ts` file that exports all demo modules
+- A `demo-runner.ts` script executes all demos sequentially
+- All demos can be run with a single `npm run demo` command
+- Each demo has a clear beginning and end with console output
+
+### Dependency Direction
+- Core package should not depend on higher-level packages
+- Wallet package can depend on core
+- Examples package can depend on both core and wallet
+- Dependency inversion used when higher-level functionality needs to be integrated with core
+
+## Technical Decisions
+
+### Blockchain Implementation
+- Proof-of-Work consensus with SHA-256 hashing
+- Block difficulty represented by leading zeros in hash
+- Bitcoin-like block reward halving (50 coins initially, halving every 210,000 blocks)
+- Coinbase maturity period of 100 blocks
+
+### Transaction Model
+- UTXO (Unspent Transaction Output) model
+- Transaction inputs reference previous outputs by ID and index
+- Transaction outputs include amount, recipient address, and public key
+- Double-spend prevention both within blocks and in transaction pool
+
+### Cryptography
+- secp256k1 elliptic curve for key pairs (same as Bitcoin)
+- SHA-256 hashing for blocks and transactions
+- RIPEMD-160 used in combination with SHA-256 for wallet addresses
+- Transaction signatures cover all inputs and outputs
+
+### Performance Considerations
+- Efficient data structures (Sets) for transaction pool operations
+- Timestamp incrementation for proper block ordering
+- Proper error handling for failed mining or validation

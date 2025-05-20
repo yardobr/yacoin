@@ -9,14 +9,14 @@
  */
 
 // Import core blockchain components
-import { getLatestBlock, addBlock } from '../core/src/blockchain/chain';
-import { calculateBlockHash } from '../core/src/blockchain/blockUtils';
+import { getLatestBlock, addBlock } from '../../core/src/blockchain/chain';
+import { calculateBlockHash } from '../../core/src/blockchain/blockUtils';
 
 // Import transaction components
-import { createCoinbaseTransaction } from '../core/src/transaction/coinbase';
+import { createCoinbaseTransaction } from '../../core/src/transaction/coinbase';
 
 // Import wallet for key generation
-import { createWallet } from '../wallet/src/index';
+import { createWallet } from '../../wallet/src/index';
 
 // Constants
 const COINBASE_MATURITY = 100; // Number of blocks before coinbase can be spent
@@ -32,9 +32,8 @@ const hexToBinary = (hexString: string): string => {
 
 // Check if hash meets difficulty requirement
 const hashMatchesDifficulty = (hash: string, difficulty: number): boolean => {
-  const hashInBinary = hexToBinary(hash);
   const requiredPrefix = '0'.repeat(difficulty);
-  return hashInBinary.startsWith(requiredPrefix);
+  return hash.startsWith(requiredPrefix);
 };
 
 // Find valid nonce for a block (mining)
@@ -71,9 +70,13 @@ const mineBlock = (block: any, difficulty: number): any => {
 
 // Create a new block
 const createBlock = (previousHash: string, transactions: any[], index: number): any => {
+  // Use timestamp with a small increment to ensure it's always greater than the previous block
+  // Get the current time in seconds and add index to ensure it's always increasing
+  const timestamp = Math.floor(Date.now() / 1000) + index;
+  
   return {
     index,
-    timestamp: Math.floor(Date.now() / 1000),
+    timestamp,
     transactions,
     previousHash,
     hash: '', // Will be calculated during mining
@@ -209,33 +212,47 @@ console.log('\n=== Advancing Blockchain ===');
 const additionalBlocks = 95;
 console.log(`Mining ${additionalBlocks} additional blocks to mature early coinbase outputs...`);
 
-// Fast-forward by mining empty blocks
-for (let i = 1; i <= additionalBlocks; i++) {
-  const currentIndex = getLatestBlock().index + 1;
+// Function to mine additional blocks
+const mineAdditionalBlocks = async () => {
+  // Fast-forward by mining empty blocks
+  for (let i = 1; i <= additionalBlocks; i++) {
+    const currentIndex = getLatestBlock().index + 1;
 
-  // Create an empty block (with just coinbase, but we don't track these)
-  const coinbaseTx = createCoinbaseTransaction(
-    currentIndex,
-    miner.address,
-    miner.keyPair.publicKey,
-    calculateBlockReward(currentIndex),
-    ''
-  );
+    // Create an empty block (with just coinbase, but we don't track these)
+    const coinbaseTx = createCoinbaseTransaction(
+      currentIndex,
+      miner.address,
+      miner.keyPair.publicKey,
+      calculateBlockReward(currentIndex),
+      ''
+    );
 
-  const newBlock = createBlock(
-    getLatestBlock().hash,
-    [coinbaseTx],
-    currentIndex
-  );
+    const newBlock = createBlock(
+      getLatestBlock().hash,
+      [coinbaseTx],
+      currentIndex
+    );
 
-  const minedBlock = mineBlock(newBlock, DIFFICULTY);
-  addBlock(minedBlock);
+    const minedBlock = mineBlock(newBlock, DIFFICULTY);
+    const added = addBlock(minedBlock);
+    
+    if (!added) {
+      console.error(`Failed to add block #${currentIndex} to the chain!`);
+      // Add a delay to ensure the next block has a higher timestamp
+      // This helps prevent timestamp validation errors
+      const delay = 1000; // 1 second
+      await new Promise(resolve => setTimeout(resolve, delay));
+    }
 
-  // Log progress at intervals
-  if (i % 20 === 0 || i === additionalBlocks) {
-    console.log(`Mined ${i} blocks, index now: ${getLatestBlock().index}`);
+    // Log progress at intervals
+    if (i % 20 === 0 || i === additionalBlocks) {
+      console.log(`Mined ${i} blocks, index now: ${getLatestBlock().index}`);
+    }
   }
-}
+};
+
+// Mine additional blocks
+mineAdditionalBlocks();
 
 // Show updated spendable outputs
 console.log('\n=== Updated Coinbase Outputs ===');

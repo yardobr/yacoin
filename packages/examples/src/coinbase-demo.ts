@@ -9,7 +9,7 @@
  */
 
 // Import wallet for key generation
-import { createWallet } from '../wallet/src/index';
+import { createWallet } from '../../wallet/src/index';
 
 // Import coinbase-related functions from core
 import { 
@@ -17,7 +17,7 @@ import {
   isCoinbaseTransaction,
   getCoinbaseBlockHeight,
   getCoinbaseMinerData
-} from '../core/src/transaction/coinbase';
+} from '../../core/src/transaction/coinbase';
 
 // Utility function to calculate block reward based on block height
 const calculateBlockReward = (blockHeight: number): number => {

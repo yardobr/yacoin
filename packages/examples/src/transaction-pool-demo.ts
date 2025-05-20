@@ -9,7 +9,7 @@
  */
 
 // Import wallet first to ensure its signature verifier is registered
-import { createWallet } from '../wallet/src/index';
+import { createWallet } from '../../wallet/src/index';
 
 import { 
   TransactionData, 
@@ -19,8 +19,8 @@ import {
   getTransactionsFromPool,
   removeFromTransactionPool,
   updatePoolAfterBlockAdded
-} from '../core/src/transaction';
-import { createTransaction } from '../wallet/src/wallet';
+} from '../../core/src/transaction';
+import { createTransaction } from '../../wallet/src/wallet';
 
 // Create wallets
 console.log('Creating wallets...');

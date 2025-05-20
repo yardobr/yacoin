@@ -3,9 +3,7 @@
   "version": "0.1.0",
   "description": "Examples for YaCoin cryptocurrency",
   "scripts": {
-    "test": "npm run test:wallet && npm run test:txpool",
-    "test:wallet": "tsx wallet-integration.ts",
-    "test:txpool": "tsx transaction-pool-demo.ts"
+    "demo": "tsx src/demo-runner.ts"
   },
   "dependencies": {
     "@yacoin/core": "0.1.0",
