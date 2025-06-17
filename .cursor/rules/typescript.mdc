@@ -1,0 +1,22 @@
+---
+description: 
+globs: *.ts
+alwaysApply: false
+---
+# Code Style and Structure
+
+1. **Functional Programming Only**
+   - Use functions and plain objects, no classes
+   - Use TypeScript `type` declarations, not `interfaces`
+   - Prefer immutable data structures and pure functions
+
+2. **Module Structure**
+   - Keep files small and focused on a single responsibility
+   - Use barrel exports (index.ts) for cleaner imports
+   - Group related functionality in directories
+
+3. **Imports and Exports**
+   - Use named exports/imports rather than default exports
+   - When importing from other packages, reference the package, not relative paths
+   - Use CommonJS module system throughout the project
+   - No need to include file extensions in imports

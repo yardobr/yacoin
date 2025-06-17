@@ -30,11 +30,18 @@ Tracks what's working, what's left, current status, and known issues.
         - Transaction pool implementation for unconfirmed transactions
         - Signature verification interface for dependency inversion
         - Coinbase transaction structure and functions defined
+    - Mining rewards system:
+        - Automatic coinbase transaction creation in mined blocks
+        - Bitcoin-like halving reward model (50 coins, halving every 210,000 blocks)
+        - Reward validation based on block height
+        - Block mining with proper timestamps using async delays
+        - Integrated mining functions that handle the entire process
     - Tests implemented:
         - TypeScript-based Jest configuration
         - Unit tests for core types (Block, Transaction)
         - Unit tests for blockchain utilities (hash calculation)
         - Unit tests for genesis block creation
+        - Unit tests for mining rewards and coinbase transactions
 
 - **`@yacoin/wallet` Package:**
     - Key pair generation using secp256k1 elliptic curve cryptography
@@ -58,11 +65,11 @@ Tracks what's working, what's left, current status, and known issues.
       - Coinbase transaction creation with block rewards
       - Bitcoin-like halving reward model implementation
       - Tracking coinbase maturity period (example level)
+      - Integrated mining rewards demo showing complete mining process
 
 ## What's Left to Build
 
 - **Core Functionality:**
-  - Integration of mining rewards into core blockchain mining process
   - Mining difficulty adjustment
   - Network layer (P2P communication)
   - Persistent storage for the blockchain
@@ -83,13 +90,14 @@ Tracks what's working, what's left, current status, and known issues.
 - A transaction pool manages unconfirmed transactions with double-spend prevention
 - Architecture has been improved with proper dependency direction (core doesn't depend on wallet)
 - Performance optimizations in place for transaction pool operations
-- Coinbase transaction structure and creation are defined, but not integrated with mining process
-- Mining reward calculation with Bitcoin-like halving implemented in examples
+- Mining rewards with Bitcoin-like halving are integrated into the core mining process
+- Blocks are automatically created with coinbase transactions that include the proper rewards
+- Mining functions handle timestamp ordering through asynchronous operations
 - Unit testing established for core package with TypeScript-based Jest configuration
 
 ## Known Issues/TODOs
 
-- Coinbase transactions are not automatically included in mined blocks at core level
-- Mining difficulty is currently static
+- Mining difficulty is currently static and not adjusted based on mining time
+- Block time may become irregular without proper difficulty adjustment
 - No network layer implementation
 - No persistence layer 

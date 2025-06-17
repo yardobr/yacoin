@@ -4,33 +4,36 @@ This file tracks the immediate focus, recent changes, and next steps for the YaC
 
 ## Current Focus
 
-The current focus is on implementing the remaining core cryptocurrency functionality, specifically focusing on mining rewards, network layer, and enhancing transaction validation.
+The current focus is on implementing the remaining core cryptocurrency functionality, specifically focusing on mining difficulty adjustment, network layer, and persistent storage.
 
 ## Recent Changes (Last Session)
 
-- Improved the UTXO model to store public keys:
-  - Added `publicKey` field to `UnspentOutput` and `TransactionOutput` types in `packages/core/src/transaction/transactionUtils.ts`
-  - Updated transaction creation functions to include public keys for proper verification
-  - Modified examples to work with the updated UTXO model
+- Integrated mining rewards into the core blockchain:
+  - Implemented Bitcoin-like block reward calculation with halving every 210,000 blocks
+  - Modified `mineBlock` function to automatically include coinbase transactions 
+  - Created `mineBlockAndAddToChain` function that handles adding delays between blocks
+  - Ensured proper timestamp validation between blocks by adding a delay
+  - Added binary-based difficulty checking for proof-of-work validation
+  - Fixed validation to properly verify coinbase transactions in blocks
+  
+- Enhanced the block validation system:
+  - Added specialized coinbase transaction validation logic
+  - Implemented reward amount validation based on block height
+  - Ensured consistent difficulty validation between mining and validation code
+  - Created tests for mining rewards functionality
 
-- Integrated wallet signature verification into the core transaction validation:
-  - Implemented a dependency inversion architecture to avoid direct dependency of core on wallet
-  - Created `verification.ts` with a `SignatureVerifier` interface in the core package
-  - Updated the validation.ts to use the signature verifier interface
-  - Made the wallet package register its verifier implementation with the core
+- Developed a comprehensive demo showing mining rewards in action:
+  - Created `mining-rewards-integrated.ts` example
+  - Demonstrated block mining with multiple miners
+  - Displayed automatic coinbase transaction inclusion
+  - Showed reward halving at different block heights
+  - Fixed binary hash validation to ensure consistent difficulty checking
 
-- Implemented a transaction pool (mempool) for unconfirmed transactions:
-  - Created `transactionPool.ts` with functions to manage unconfirmed transactions
-  - Implemented double-spend prevention within the pool using efficient Set data structure
-  - Added functions to add, remove, and validate transactions
-  - Created functionality to update the pool when blocks are added to the chain
-  - Added a demo example for the transaction pool
-
-- Fixed architectural issues:
-  - Inverted dependencies so the core package doesn't depend on the wallet
-  - Optimized `hasDoubleSpendInPool` from O(n²m) to O(n+m) complexity using Sets
-  - Renamed `Transaction` to `TransactionData` to resolve type conflicts
-  - Updated package exports and imports for better organization
+- Previous session accomplishments:
+  - Improved the UTXO model to store public keys
+  - Integrated wallet signature verification into core transaction validation
+  - Implemented a transaction pool for unconfirmed transactions
+  - Fixed architectural issues with dependency inversion
 
 ## Next Steps
 
@@ -38,8 +41,8 @@ The current focus is on implementing the remaining core cryptocurrency functiona
    - ✅ Created coinbase transaction structure in `packages/core/src/types/coinbase.ts`
    - ✅ Implemented coinbase transaction creation and validation in `packages/core/src/transaction/coinbase.ts`
    - ✅ Implemented mining rewards calculation with Bitcoin-like halving approach in example files
-   - 🔄 Integrate mining rewards with core block creation process
-   - 🔄 Update mining functions to automatically include coinbase transactions
+   - ✅ Integrated mining rewards with core block creation process
+   - ✅ Updated mining functions to automatically include coinbase transactions
 
 2. **Difficulty Adjustment:**
    - Implement logic to adjust the mining `difficulty` based on block generation time
@@ -68,8 +71,10 @@ The current focus is on implementing the remaining core cryptocurrency functiona
 - Using registration pattern for connecting wallet functionality to core
 - Following functional programming principles for all code
 - All types defined using `type` (not `interface`)
+- Added async/await pattern for block mining to support delays between block generation
+- Using binary hash checking for difficulty validation to ensure proper proof-of-work
 
-# Open questions: Specific P2P protocol details, storage implementation details, transaction pool design, and full cryptographic integration.
+# Open questions: Specific P2P protocol details, storage implementation details, optimal difficulty adjustment algorithm.
 # Next steps: 
-  1. Integrate mining rewards directly into the core mining process.
-  2. Update block mining to automatically include coinbase transactions. 
+  1. Implement difficulty adjustment based on block generation time.
+  2. Design and implement the P2P network layer. 
