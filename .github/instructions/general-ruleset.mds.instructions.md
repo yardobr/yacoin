@@ -1,0 +1,97 @@
+---
+applyTo: '**'
+---
+
+# YaCoin Project Rules and Guidelines
+
+
+## Package Organization
+
+1. **Core Principles**
+   - `@yacoin/core`: Blockchain fundamentals, validation, mining, transactions
+   - `@yacoin/wallet`: Cryptographic operations, key management, signatures
+   - `@yacoin/examples`: Integration tests and usage examples
+
+2. **Dependencies**
+   - Keep direct dependencies minimal
+   - Favor Node.js built-ins where possible
+   - Use "hoisted" dependencies from root when appropriate
+
+## Development Workflow
+
+1. **Building**
+   - Use project-wide scripts from root package.json (`npm run build:all`, `npm run dev`)
+   - Use esbuild for fast builds
+
+2. **Testing**
+   - Write focused unit tests for core cryptographic functions
+   - Use integration tests for end-to-end flows
+   - Test both happy paths and edge cases
+
+## Cryptography Guidelines
+
+1. **Key Security**
+   - Never log or expose private keys
+   - Provide clear warnings about development vs production keys
+
+2. **Signature Verification**
+   - Always verify that public keys match claimed addresses
+   - Validate all signatures in transactions
+
+## Documentation
+
+1. **Code Comments**
+   - Focus on "why" not "what" in comments
+   - Use JSDoc for public API functions
+   - Document edge cases and security considerations
+
+2. **Memory Bank Structure**
+   - Keep progress.md updated with what works and what's left
+   - Document design decisions in activeContext.md
+   - Update tech choices in techContext.md
+
+## Project Organizational Patterns
+
+### Package Structure
+- Each package has its own `package.json`, `tsconfig.json`, and `src/` directory
+- Core logic is in `@yacoin/core`
+- Wallet functionality is in `@yacoin/wallet` 
+- Examples demonstrating usage are in `@yacoin/examples`
+
+### Examples Package Organization
+- All demo files are located in the `src/` directory
+- The package has an `index.ts` file that exports all demo modules
+- A `demo-runner.ts` script executes all demos sequentially
+- All demos can be run with a single `npm run demo` command
+- Each demo has a clear beginning and end with console output
+
+### Dependency Direction
+- Core package should not depend on higher-level packages
+- Wallet package can depend on core
+- Examples package can depend on both core and wallet
+- Dependency inversion used when higher-level functionality needs to be integrated with core
+
+## Technical Decisions
+
+### Blockchain Implementation
+- Proof-of-Work consensus with SHA-256 hashing
+- Block difficulty represented by leading zeros in hash
+- Bitcoin-like block reward halving (50 coins initially, halving every 210,000 blocks)
+- Coinbase maturity period of 100 blocks
+
+### Transaction Model
+- UTXO (Unspent Transaction Output) model
+- Transaction inputs reference previous outputs by ID and index
+- Transaction outputs include amount, recipient address, and public key
+- Double-spend prevention both within blocks and in transaction pool
+
+### Cryptography
+- secp256k1 elliptic curve for key pairs (same as Bitcoin)
+- SHA-256 hashing for blocks and transactions
+- RIPEMD-160 used in combination with SHA-256 for wallet addresses
+- Transaction signatures cover all inputs and outputs
+
+### Performance Considerations
+- Efficient data structures (Sets) for transaction pool operations
+- Timestamp incrementation for proper block ordering
+- Proper error handling for failed mining or validation
