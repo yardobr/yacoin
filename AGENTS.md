@@ -1,8 +1,3 @@
----
-description: 
-globs: 
-alwaysApply: true
----
 # YaCoin Project Rules and Guidelines
 
 
@@ -96,3 +91,7 @@ alwaysApply: true
 - Efficient data structures (Sets) for transaction pool operations
 - Timestamp incrementation for proper block ordering
 - Proper error handling for failed mining or validation
+
+## Memory bank (always applies)
+
+Before every task, read and follow the memory bank workflow: @.agents/docs/memory-bank.md

@@ -1,8 +1,8 @@
 ---
-description: 
-globs: *.ts
-alwaysApply: false
+name: typescript-code-style
+description: Code style for TypeScript files in this repo (functional style, types not interfaces, module structure, imports/exports). Use whenever you create or edit *.ts files.
 ---
+
 # Code Style and Structure
 
 1. **Functional Programming Only**
